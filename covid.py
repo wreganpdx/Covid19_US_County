@@ -110,25 +110,6 @@ for row in rows:
     last = float(int(row[0]))
     date = row[3]
     date = date[:date.index(' ')]
-    date = date.replace('03-', '3-')
-    date = date.replace('04-', '4-')
-    date = date.replace('05-', '5-')
-    date = date.replace('02-', '2-')
-    date = date.replace('06-', '6-')
-    date = date.replace('-06', '-6')
-    date = date.replace('-05', '-5')
-    date = date.replace('-03', '-3')
-    date = date.replace('-02', '-2')
-    date = date.replace('-04', '-4')
-    date = date.replace('-01', '-1')
-    date = date.replace('-07', '-7')
-    date = date.replace('-08', '-8')
-    date = date.replace('-09', '-9')
-    date = date.replace('3/', '3-')
-    date = date.replace('4/', '4-')
-    date = date.replace('4-4-20', '4-20')
-    date = date.replace('2020-', '')
-    date = date.replace('/20', '')
     print(date)
    # if count % 2 == 0:
     dataDates.append(date)
@@ -137,9 +118,6 @@ print(rows)
 print(dataCases)
 #dataCases = [19,21,25,33,45,67,81,91,100]
 print(dataCases)
-#dataDeaths = [1,1,2,2,2,2,2,2,2]
-#dataRecovered = [0,0,0,0,0,0,0,0,0]
-#dates = [22,23,24,25,26,27,28,29,30]
 
 dates = [datetime.datetime(2020, 3, 22) + datetime.timedelta(hours=k * 24)
             for k in range(count)]
