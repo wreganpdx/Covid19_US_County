@@ -3,7 +3,6 @@ import numpy as np
 import requests
 import csv
 import sqlite3
-# count the arguments
 class DataInit(object):
 
     def __init__(self):
