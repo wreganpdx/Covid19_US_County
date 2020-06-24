@@ -5,11 +5,17 @@ from matplotlib.ticker import (
     AutoLocator, AutoMinorLocator)
 import datetime
 import matplotlib.dates as mdates
+import numpy as np
 from matplotlib.transforms import Transform
+import matplotlib.ticker as ticker
+import os
 
 
 database, dates, key = DataInit.getData()
-
+try:
+    os.mkdir("C:\Users\Will Regan\Desktop\covid/"+ key)
+except OSError as error:
+    print(error)
 
 #covid_data = DataInit.getData()
 g_colors = ["g", "r", "b", "c", "m", "y", "k", ]
@@ -141,7 +147,7 @@ ax.format_xdata = mdates.DateFormatter('%m-%d')
 fig.autofmt_xdate()
 
 ax.legend(loc="best")
-#ax.figure()
+plt.savefig("C:\Users\Will Regan\Desktop\covid/"+ key + "/totalCases")
 plt.figure()
 
 fig, ax = plt.subplots(constrained_layout=True)
@@ -161,12 +167,12 @@ ax.legend(loc="best")
 ax.format_xdata = mdates.DateFormatter('%m-%d')
 fig.autofmt_xdate()
 
-
+dates_cp = dates[:]
 
 dates = [datetime.datetime(2020, 3, 23) + datetime.timedelta(hours=k * 24)
             for k in range(count-1)]
 
-
+plt.savefig("C:\Users\Will Regan\Desktop\covid/"+ key + "/mvgAvg")
 
 fig, ax = plt.subplots(constrained_layout=True)
 
@@ -182,7 +188,7 @@ ax.legend(loc="best")
 
 ax.format_xdata = mdates.DateFormatter('%m-%d')
 fig.autofmt_xdate()
-
+plt.savefig("C:\Users\Will Regan\Desktop\covid/"+ key + "/newCases")
 plt.figure()
 
 fig, ax = plt.subplots(constrained_layout=True)
@@ -199,7 +205,112 @@ ax.legend(loc="best")
 ax.format_xdata = mdates.DateFormatter('%m-%d')
 fig.autofmt_xdate()
 
+plt.savefig("C:\Users\Will Regan\Desktop\covid/"+ key + "/percent")
+plt.figure()
 
+fig, ax = plt.subplots(constrained_layout=True)
+
+ax.xdate = True
+ax.set_title("%s, from %s to %s" % (key, firstDate, lastDate))
+ax.set_xlabel("Days")
+ax.set_ylabel("New Cases")
+
+x = np.arange(len(dates_cp))
+y = data14avg
+
+
+coefficients = np.polyfit(x, y, 3)
+poly = np.poly1d(coefficients)
+new_x = np.linspace(x[0], x[-1])
+new_y = poly(new_x)
+
+ax.plot(x, y, "o", new_x, new_y)
+ax.set_xlim([x[0]-1, x[-1] + 1 ])
+
+
+plt.xticks(np.arange(len(dates_cp)), dates_cp, rotation=30)
+
+spacing = 0
+for label in ax.get_xticklabels()[:]:
+    spacing += 1
+    if spacing % 8 != 0:
+       label.set_visible(False)
+
+
+ax.legend(loc="best")
+
+
+plt.savefig("C:\Users\Will Regan\Desktop\covid/"+ key + "/14dayFit")
+
+
+
+fig, ax = plt.subplots(constrained_layout=True)
+
+ax.xdate = True
+ax.set_title("%s, from %s to %s" % (key, firstDate, lastDate))
+ax.set_xlabel("Days")
+ax.set_ylabel("New Cases")
+
+x = np.arange(len(dates_cp))
+y = data7avg
+
+
+coefficients = np.polyfit(x, y, 3)
+poly = np.poly1d(coefficients)
+new_x = np.linspace(x[0], x[-1])
+new_y = poly(new_x)
+
+ax.plot(x, y, "o", new_x, new_y)
+ax.set_xlim([x[0]-1, x[-1] + 1 ])
+
+
+plt.xticks(np.arange(len(dates_cp)), dates_cp, rotation=30)
+
+spacing = 0
+for label in ax.get_xticklabels()[:]:
+    spacing += 1
+    if spacing % 8 != 0:
+       label.set_visible(False)
+
+
+ax.legend(loc="best")
+
+
+plt.savefig("C:\Users\Will Regan\Desktop\covid/"+ key + "/7dayFit")
+
+fig, ax = plt.subplots(constrained_layout=True)
+
+ax.xdate = True
+ax.set_title("%s, from %s to %s" % (key, firstDate, lastDate))
+ax.set_xlabel("Days")
+ax.set_ylabel("New Cases")
+
+x = np.arange(len(dates_cp))
+y = data30avg
+
+
+coefficients = np.polyfit(x, y, 3)
+poly = np.poly1d(coefficients)
+new_x = np.linspace(x[0], x[-1])
+new_y = poly(new_x)
+
+ax.plot(x, y, "o", new_x, new_y)
+ax.set_xlim([x[0]-1, x[-1] + 1 ])
+
+
+plt.xticks(np.arange(len(dates_cp)), dates_cp, rotation=30)
+
+spacing = 0
+for label in ax.get_xticklabels()[:]:
+    spacing += 1
+    if spacing % 8 != 0:
+       label.set_visible(False)
+
+
+ax.legend(loc="best")
+
+
+plt.savefig("C:\Users\Will Regan\Desktop\covid/"+ key + "/30dayFit")
 
 
 plt.show()
